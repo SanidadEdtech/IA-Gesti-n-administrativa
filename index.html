@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Fundamentos Básicos de la Gestión Administrativa Sanitaria con Inteligencia Artificial - Contenido educativo interactivo para Técnico Superior en Documentación Sanitaria">
+<title>Fundamentos de Gestión Administrativa Sanitaria con IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #e8f5e9;
+  --green-900: #1b5e20;
+  --green-800: #2e7d32;
+  --green-700: #388e3c;
+  --green-600: #43a047;
+  --green-500: #4caf50;
+  --green-400: #66bb6a;
+  --green-300: #81c784;
+  --green-200: #a5d6a7;
+  --green-100: #c8e6c9;
+  --green-50: #e8f5e9;
+  --white: #ffffff;
+  --card-shadow: 0 4px 20px rgba(27, 94, 32, 0.08);
+  --card-shadow-hover: 0 8px 32px rgba(27, 94, 32, 0.15);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --font-title: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: #2d2d2d;
+  line-height: 1.7;
+  font-size: 16px;
+  min-height: 100vh;
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--green-100);
+  z-index: 1000;
+}
+.progress-bar__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green-700), var(--green-400));
+  width: 11.1%;
+  transition: width 0.5s ease;
+  border-radius: 0 4px 4px 0;
+}
+
+/* ===== HEADER ===== */
+.header {
+  background: linear-gradient(135deg, var(--green-900) 0%, var(--green-700) 50%, var(--green-600) 100%);
+  color: var(--white);
+  padding: 60px 24px 50px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 70%, rgba(255,255,255,0.05) 0%, transparent 60%),
+              radial-gradient(circle at 70% 30%, rgba(255,255,255,0.08) 0%, transparent 50%);
+  animation: headerShimmer 15s ease-in-out infinite;
+}
+@keyframes headerShimmer {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-5%, 5%); }
+}
+.header__content { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+.header__badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+.header__icon {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+  animation: pulse 3s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+.header h1 {
+  font-family: var(--font-title);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.3;
+  margin-bottom: 16px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.header__subtitle {
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  opacity: 0.9;
+  font-weight: 300;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ===== NAVIGATION ===== */
+.nav {
+  position: sticky;
+  top: 4px;
+  z-index: 900;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--green-200);
+  box-shadow: 0 2px 16px rgba(27,94,32,0.06);
+}
+.nav__inner {
+  display: flex;
+  gap: 4px;
+  padding: 8px 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.nav__inner::-webkit-scrollbar { display: none; }
+.nav__btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--green-800);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+  position: relative;
+}
+.nav__btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3px;
+  background: var(--green-600);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+.nav__btn:hover {
+  background: var(--green-50);
+}
+.nav__btn.active {
+  background: var(--green-50);
+  color: var(--green-900);
+}
+.nav__btn.active::after {
+  width: 60%;
+}
+.nav__btn-icon { font-size: 1.1rem; }
+
+/* ===== MAIN CONTENT ===== */
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+}
+.section {
+  display: none;
+  animation: fadeIn 0.5s ease;
+}
+.section.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== SECTION TITLES ===== */
+.section-title {
+  font-family: var(--font-title);
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  color: var(--green-900);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title__icon { font-size: 1.8rem; }
+.section-subtitle {
+  color: var(--green-700);
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 32px;
+  padding-left: 4px;
+}
+
+/* ===== CARDS ===== */
+.card {
+  background: var(--white);
+  border: 1px solid var(--green-200);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 20px;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition);
+}
+.card:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
+}
+.card__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.card__icon { font-size: 1.6rem; }
+.card__title {
+  font-family: var(--font-title);
+  font-size: 1.25rem;
+  color: var(--green-900);
+}
+.card__body { color: #444; font-size: 0.95rem; line-height: 1.8; }
+.card__body p { margin-bottom: 10px; }
+.card__body ul { padding-left: 20px; margin-bottom: 10px; }
+.card__body li { margin-bottom: 6px; }
+
+/* ===== GRIDS ===== */
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-bottom: 20px; }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px; }
+
+/* ===== HIGHLIGHT BOX ===== */
+.highlight-box {
+  background: linear-gradient(135deg, #fff9e6, #fff3cd);
+  border: 1px solid #f0d060;
+  border-left: 5px solid #f0ad4e;
+  border-radius: var(--radius-sm);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.highlight-box__title {
+  font-family: var(--font-title);
+  color: #8a6d0b;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.highlight-box__body { color: #5d4e00; font-size: 0.95rem; line-height: 1.7; }
+
+/* ===== TABLES ===== */
+.table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 20px;
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+  font-size: 0.9rem;
+}
+thead { background: linear-gradient(135deg, var(--green-800), var(--green-700)); }
+th {
+  color: var(--white);
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+}
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--green-100);
+  color: #444;
+}
+tbody tr:hover { background: var(--green-50); }
+tbody tr:last-child td { border-bottom: none; }
+
+/* ===== PILLS ===== */
+.pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: var(--green-50);
+  color: var(--green-800);
+  border: 1px solid var(--green-200);
+}
+
+/* ===== ACCORDIONS ===== */
+.accordion { margin-bottom: 12px; }
+.accordion__header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  background: var(--white);
+  border: 1px solid var(--green-200);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--green-900);
+  transition: var(--transition);
+  box-shadow: var(--card-shadow);
+}
+.accordion__header:hover { background: var(--green-50); }
+.accordion__header.open {
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  background: var(--green-50);
+  border-bottom-color: transparent;
+}
+.accordion__chevron {
+  transition: transform 0.3s ease;
+  font-size: 0.8rem;
+}
+.accordion__header.open .accordion__chevron {
+  transform: rotate(180deg);
+}
+.accordion__body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+  background: var(--white);
+  border: 1px solid var(--green-200);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+}
+.accordion__body.open {
+  max-height: 600px;
+  padding: 20px 24px;
+}
+.accordion__body p { font-size: 0.93rem; color: #444; line-height: 1.7; margin-bottom: 8px; }
+.accordion__body ul { padding-left: 20px; margin: 8px 0; }
+.accordion__body li { font-size: 0.93rem; color: #444; margin-bottom: 4px; }
+
+/* ===== TIMELINE ===== */
+.timeline { position: relative; padding-left: 40px; margin: 24px 0; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--green-600), var(--green-300));
+  border-radius: 3px;
+}
+.timeline__item {
+  position: relative;
+  margin-bottom: 28px;
+}
+.timeline__item::before {
+  content: '';
+  position: absolute;
+  left: -32px;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  background: var(--green-600);
+  border: 3px solid var(--white);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--green-300);
+}
+.timeline__title {
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  color: var(--green-900);
+  margin-bottom: 6px;
+}
+.timeline__body { font-size: 0.93rem; color: #444; line-height: 1.7; }
+
+/* ===== STAT CARDS ===== */
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--green-200);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  text-align: center;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition);
+}
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-shadow-hover);
+}
+.stat-card__number {
+  font-family: var(--font-title);
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  color: var(--green-700);
+  margin-bottom: 4px;
+}
+.stat-card__label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--green-800);
+}
+
+/* ===== CASE STUDY ===== */
+.case-study {
+  background: linear-gradient(135deg, #f1f8e9, #dcedc8);
+  border: 1px solid var(--green-300);
+  border-left: 5px solid var(--green-600);
+  border-radius: var(--radius-sm);
+  padding: 28px;
+  margin: 24px 0;
+}
+.case-study__title {
+  font-family: var(--font-title);
+  font-size: 1.15rem;
+  color: var(--green-900);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.case-study__body { font-size: 0.93rem; color: #333; line-height: 1.8; }
+.case-study__body p { margin-bottom: 8px; }
+.case-study__body ul { padding-left: 20px; }
+.case-study__body li { margin-bottom: 4px; }
+
+/* ===== QUIZ ===== */
+.quiz-question {
+  background: var(--white);
+  border: 1px solid var(--green-200);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 20px;
+  box-shadow: var(--card-shadow);
+  counter-increment: quiz;
+}
+.quiz-question__text {
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  color: var(--green-900);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.quiz-option {
+  display: block;
+  width: 100%;
+  padding: 14px 18px;
+  margin-bottom: 8px;
+  border: 2px solid var(--green-200);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.93rem;
+  color: #333;
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: left;
+}
+.quiz-option:hover:not(.disabled) {
+  background: var(--green-50);
+  border-color: var(--green-400);
+}
+.quiz-option.correct {
+  background: #e8f5e9;
+  border-color: var(--green-600);
+  color: var(--green-900);
+  font-weight: 600;
+}
+.quiz-option.incorrect {
+  background: #ffebee;
+  border-color: #ef5350;
+  color: #c62828;
+}
+.quiz-option.disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.quiz-feedback {
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-xs);
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: none;
+}
+.quiz-feedback.show { display: block; }
+.quiz-feedback.correct {
+  background: #e8f5e9;
+  color: var(--green-900);
+  border: 1px solid var(--green-300);
+}
+.quiz-feedback.incorrect {
+  background: #fff3e0;
+  color: #e65100;
+  border: 1px solid #ffcc80;
+}
+
+/* ===== SCROLL TO TOP ===== */
+.scroll-top {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--green-700), var(--green-500));
+  border: none;
+  color: var(--white);
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(27,94,32,0.3);
+  z-index: 800;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.scroll-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.scroll-top:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 24px rgba(27,94,32,0.4);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--green-900);
+  color: var(--white);
+  text-align: center;
+  padding: 32px 24px;
+  font-size: 0.9rem;
+}
+.footer a {
+  color: var(--green-300);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+.footer a:hover { color: var(--green-100); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .header { padding: 40px 16px 36px; }
+  .main { padding: 20px 12px 40px; }
+  .card { padding: 20px; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .nav__btn { padding: 8px 12px; font-size: 0.78rem; }
+  .section-title { font-size: 1.4rem; }
+  .accordion__header { padding: 14px 16px; font-size: 0.88rem; }
+  .timeline { padding-left: 32px; }
+}
+@media (max-width: 480px) {
+  .grid-4 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header__content">
+    <div class="header__badge">Técnico Superior en Documentación Sanitaria · Gestión Administrativa Sanitaria</div>
+    <span class="header__icon">🏥</span>
+    <h1>Fundamentos Básicos de la Gestión Administrativa Sanitaria con Inteligencia Artificial</h1>
+    <p class="header__subtitle">Explora cómo la Inteligencia Artificial, el Marco Legal Europeo y las Arquitecturas de Datos transforman la gestión sanitaria moderna. Un recorrido interactivo desde los fundamentos hasta los casos prácticos.</p>
+  </div>
+</header>
+
+<!-- Navigation -->
+<nav class="nav" id="mainNav">
+  <div class="nav__inner">
+    <button class="nav__btn active" data-section="sec-intro" onclick="showSection('sec-intro', this)">
+      <span class="nav__btn-icon">📋</span> Introducción
+    </button>
+    <button class="nav__btn" data-section="sec-arq" onclick="showSection('sec-arq', this)">
+      <span class="nav__btn-icon">🏗️</span> Arquitectura
+    </button>
+    <button class="nav__btn" data-section="sec-mlops" onclick="showSection('sec-mlops', this)">
+      <span class="nav__btn-icon">⚙️</span> MLOps
+    </button>
+    <button class="nav__btn" data-section="sec-rgpd" onclick="showSection('sec-rgpd', this)">
+      <span class="nav__btn-icon">🔒</span> RGPD
+    </button>
+    <button class="nav__btn" data-section="sec-ria" onclick="showSection('sec-ria', this)">
+      <span class="nav__btn-icon">📜</span> RIA
+    </button>
+    <button class="nav__btn" data-section="sec-priv" onclick="showSection('sec-priv', this)">
+      <span class="nav__btn-icon">🛡️</span> Privacidad
+    </button>
+    <button class="nav__btn" data-section="sec-esp" onclick="showSection('sec-esp', this)">
+      <span class="nav__btn-icon">🇪🇸</span> Caso España
+    </button>
+    <button class="nav__btn" data-section="sec-casos" onclick="showSection('sec-casos', this)">
+      <span class="nav__btn-icon">💡</span> Casos Prácticos
+    </button>
+    <button class="nav__btn" data-section="sec-quiz" onclick="showSection('sec-quiz', this)">
+      <span class="nav__btn-icon">✅</span> Autoevaluación
+    </button>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<main class="main">
+
+  <!-- SECTION 1: Introducción -->
+  <section class="section active" id="sec-intro">
+    <h2 class="section-title"><span class="section-title__icon">📋</span> Introducción: Contexto y Desafíos</h2>
+    <p class="section-subtitle">El panorama actual de la transformación digital en el ámbito sanitario.</p>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card__header">
+          <span class="card__icon">🔄</span>
+          <h3 class="card__title">Transformación Digital</h3>
+        </div>
+        <div class="card__body">
+          <p>El sistema sanitario experimenta una revolución digital sin precedentes. La digitalización de historias clínicas, la interoperabilidad entre centros y la adopción de herramientas de IA están redefiniendo la forma en que se presta la atención sanitaria.</p>
+          <p>Los datos generados diariamente en hospitales, centros de salud y dispositivos wearables crecen de forma exponencial, exigiendo nuevas arquitecturas capaces de procesarlos.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card__header">
+          <span class="card__icon">🔬</span>
+          <h3 class="card__title">Medicina Predictiva</h3>
+        </div>
+        <div class="card__body">
+          <p>La Inteligencia Artificial permite identificar patrones clínicos que escapan al análisis humano. Desde la detección precoz de enfermedades hasta la personalización de tratamientos, la medicina predictiva es ya una realidad.</p>
+          <p>Modelos de Machine Learning entrenados con datos clínicos pueden anticipar reingresos, predecir complicaciones o sugerir opciones terapéuticas basadas en evidencia.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card__header">
+          <span class="card__icon">⚖️</span>
+          <h3 class="card__title">Incertidumbre Legal</h3>
+        </div>
+        <div class="card__body">
+          <p>La confluencia del RGPD y el nuevo Reglamento de IA (RIA) crea un marco normativo complejo. Los datos de salud gozan de máxima protección, siendo clasificados como "categoría especial" bajo el Art. 9 del RGPD.</p>
+          <p>Los profesionales de documentación sanitaria deben comprender ambos marcos para garantizar el cumplimiento normativo en cada proyecto de IA.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box__title">💡 Dato Clave</div>
+      <div class="highlight-box__body">
+        <strong>Más del 80% de los datos sanitarios son no estructurados</strong> (informes clínicos en texto libre, imágenes radiológicas, señales de monitorización, grabaciones de voz). Las arquitecturas tradicionales tipo Data Warehouse no pueden procesar este volumen y variedad de datos, lo que impulsa la adopción de nuevas soluciones como el Data Lakehouse.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__header">
+        <span class="card__icon">🎯</span>
+        <h3 class="card__title">El Doble Desafío: Innovación + Regulación</h3>
+      </div>
+      <div class="card__body">
+        <p>Las organizaciones sanitarias se enfrentan a un doble reto simultáneo:</p>
+        <ul>
+          <li><strong>Innovar</strong>: Adoptar tecnologías de IA que mejoren la eficiencia, reduzcan errores y personalicen la atención al paciente.</li>
+          <li><strong>Regular</strong>: Garantizar que toda innovación cumpla con el RGPD, el RIA y las normativas nacionales, protegiendo los derechos fundamentales de los pacientes.</li>
+        </ul>
+        <p>Este equilibrio requiere profesionales con conocimientos tanto técnicos como legales, capaces de actuar como puente entre los equipos de desarrollo de IA y los órganos de cumplimiento normativo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: Arquitectura Data Lakehouse -->
+  <section class="section" id="sec-arq">
+    <h2 class="section-title"><span class="section-title__icon">🏗️</span> Arquitectura Data Lakehouse</h2>
+    <p class="section-subtitle">La evolución de las arquitecturas de datos sanitarios hacia modelos unificados.</p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Característica</th>
+            <th>Data Warehouse</th>
+            <th>Data Lake</th>
+            <th>Data Lakehouse</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Tipos de datos</strong></td>
+            <td>Estructurados</td>
+            <td>Todos (sin restricción)</td>
+            <td>Todos (con gobernanza)</td>
+          </tr>
+          <tr>
+            <td><strong>Esquema</strong></td>
+            <td>Schema-on-Write (rígido)</td>
+            <td>Schema-on-Read (flexible)</td>
+            <td>Híbrido (flexible + validación)</td>
+          </tr>
+          <tr>
+            <td><strong>Gobernanza</strong></td>
+            <td>Alta (rígida)</td>
+            <td>Baja (riesgo de "data swamp")</td>
+            <td>Alta (con flexibilidad)</td>
+          </tr>
+          <tr>
+            <td><strong>IA / Machine Learning</strong></td>
+            <td>Limitado</td>
+            <td>Nativo</td>
+            <td>Nativo + gobernado</td>
+          </tr>
+          <tr>
+            <td><strong>Cumplimiento RGPD</strong></td>
+            <td>Parcial</td>
+            <td>Difícil de garantizar</td>
+            <td>Incorporado (ACL, linaje, auditoría)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card__header">
+        <span class="card__icon">🧩</span>
+        <h3 class="card__title">¿Qué es el Data Lakehouse?</h3>
+      </div>
+      <div class="card__body">
+        <p>El Data Lakehouse combina lo mejor de ambos mundos: la flexibilidad del Data Lake para almacenar cualquier tipo de dato con la gobernanza y fiabilidad del Data Warehouse. Es la arquitectura de referencia para proyectos de IA sanitaria.</p>
+        <div class="pills">
+          <span class="pill">📊 Datos no estructurados</span>
+          <span class="pill">🏷️ Metadatos y linaje</span>
+          <span class="pill">🔒 Control RGPD integrado</span>
+          <span class="pill">📈 Analítica unificada</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card__header">
+          <span class="card__icon">🔧</span>
+          <h3 class="card__title">Resolución de Desafíos</h3>
+        </div>
+        <div class="card__body">
+          <ul>
+            <li>Ingesta de datos heterogéneos (HCE, imágenes DICOM, IoT, wearables).</li>
+            <li>Transacciones ACID sobre el Data Lake (Delta Lake, Apache Iceberg).</li>
+            <li>Linaje de datos completo: desde el sensor hasta el modelo predictivo.</li>
+            <li>ACL granular: control de acceso por columna, fila o celda.</li>
+            <li>Auditoría completa de accesos y transformaciones.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card__header">
+          <span class="card__icon">🏆</span>
+          <h3 class="card__title">Ventaja Estratégica</h3>
+        </div>
+        <div class="card__body">
+          <ul>
+            <li>Reducción de costes al eliminar silos de datos duplicados.</li>
+            <li>Aceleración del time-to-insight para equipos clínicos e investigadores.</li>
+            <li>Gobernanza federada aplicable a entornos multi-hospital.</li>
+            <li>Base robusta para cumplimiento simultáneo de RGPD y RIA.</li>
+            <li>Soporte nativo para aprendizaje federado (Federated Learning).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-study">
+      <div class="case-study__title">🔍 Caso Práctico: Hospital Regional migra a Data Lakehouse</div>
+      <div class="case-study__body">
+        <p>Un hospital regional con más de 500 camas decide migrar de su Data Warehouse tradicional a una arquitectura Data Lakehouse para integrar:</p>
+        <ul>
+          <li>📷 Imágenes radiológicas (DICOM) del servicio de radiología.</li>
+          <li>⌚ Datos de wearables y dispositivos IoT de pacientes crónicos.</li>
+          <li>📝 Informes clínicos en texto libre de urgencias y consultas.</li>
+        </ul>
+        <p><strong>Resultado:</strong> Tras la migración, el equipo de Data Science entrena un modelo predictivo de reingresos hospitalarios que integra datos estructurados (analíticas, constantes vitales) y no estructurados (notas clínicas procesadas con NLP). <strong>La predicción de reingresos mejora un 23%</strong> respecto al modelo anterior basado solo en datos tabulares, permitiendo intervenciones preventivas más tempranas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: MLOps y Feature Store -->
+  <section class="section" id="sec-mlops">
+    <h2 class="section-title"><span class="section-title__icon">⚙️</span> MLOps y Feature Store</h2>
+    <p class="section-subtitle">Operacionalización del ciclo de vida de modelos de Machine Learning en entornos sanitarios.</p>
+
+    <div class="card">
+      <div class="card__header">
+        <span class="card__icon">🔄</span>
+        <h3 class="card__title">El Data Lake como Motor del Ciclo de Vida ML</h3>
+      </div>
+      <div class="card__body">
+        <p>En un ecosistema sanitario impulsado por IA, el Data Lakehouse no es solo un repositorio de almacenamiento: es el motor central que alimenta todo el ciclo de vida del Machine Learning. Desde la ingesta de datos crudos hasta la monitorización de modelos en producción, cada fase depende de una infraestructura de datos robusta y gobernable.</p>
+        <p>MLOps (Machine Learning Operations) es la disciplina que aplica prácticas DevOps al desarrollo y operación de modelos de ML, garantizando reproducibilidad, trazabilidad y cumplimiento normativo continuo.</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card__header">
+          <span class="card__icon">📦</span>
+          <h3 class="card__title">Feature Store</h3>
+        </div>
+        <div class="card__body">
+          <p>El Feature Store es un componente clave de la infraestructura MLOps que centraliza la gestión de variables (features) transformadas y listas para el entrenamiento e inferencia de modelos.</p>
+          <ul>
+            <li><strong>Consistencia:</strong> Garantiza que las mismas features se usan en entrenamiento y producción, evitando el "training-serving skew".</li>
+            <li><strong>Exactitud RGPD:</strong> Permite aplicar transformaciones de privacidad (seudonimización, agregación) de forma centralizada y auditable.</li>
+            <li><strong>Reuso:</strong> Equipos diferentes pueden reutilizar features validadas, evitando duplicación de esfuerzos y asegurando estándares de calidad.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card__header">
+          <span class="card__icon">🤝</span>
+          <h3 class="card__title">Colaboración Clínica</h3>
+        </div>
+        <div class="card__body">
+          <p>El Feature Store habilita la colaboración clínica entre departamentos y centros sanitarios, un aspecto crucial para enfermedades raras, donde los datos individuales de cada hospital son insuficientes para entrenar modelos robustos.</p>
+          <ul>
+            <li>Compartición de features anonimizadas entre centros.</li>
+            <li>Federación de features para estudios multicéntricos.</li>
+            <li>Catálogo de features con documentación clínica para investigadores.</li>
+            <li>Versionado de features vinculado a protocolos clínicos.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-box__title">⚠️ Model Registry: Obligatorio en Entornos Regulados</div>
+      <div class="highlight-box__body">
+        El Model Registry es el componente de MLOps que almacena todas las versiones de un modelo junto con sus metadatos: datos de entrenamiento, hiperparámetros, métricas de rendimiento, evaluaciones de sesgo y aprobaciones de cumplimiento. En el contexto del RIA, <strong>es obligatorio mantener un registro documental completo de cada modelo de IA desplegado en producción sanitaria</strong>, incluyendo su linaje de datos y resultados de auditoría.
+      </div>
+    </div>
+
+    <div class="case-study">
+      <div class="case-study__title">🔍 Caso Práctico: Feature Store para Detección Precoz de Sepsis</div>
+      <div class="case-study__body">
+        <p>Un consorcio hospitalario implementa un Feature Store centralizado para un proyecto de detección precoz de sepsis. <strong>Tres equipos diferentes reutilizan las mismas features</strong> validadas:</p>
+        <ul>
+          <li><strong>Equipo UCI:</strong> Usa features de constantes vitales (frecuencia cardíaca, presión arterial, temperatura) combinadas con analíticas de laboratorio para alertas en tiempo real.</li>
+          <li><strong>Equipo de Urgencias:</strong> Añade features de triaje (motivo de consulta procesado con NLP, tiempo de espera) para priorización de pacientes con riesgo de sepsis.</li>
+          <li><strong>Equipo de Investigación:</strong> Utiliza features históricas agregadas para un estudio retrospectivo sobre factores de riesgo en poblaciones vulnerables.</li>
+        </ul>
+        <p><strong>Resultado:</strong> La centralización en el Feature Store reduce el tiempo de desarrollo de cada equipo en un 40%, elimina inconsistencias entre modelos y garantiza que todas las transformaciones de privacidad (seudonimización de datos identificativos) se aplican de forma uniforme.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: Marco Legal RGPD -->
+  <section class="section" id="sec-rgpd">
+    <h2 class="section-title"><span class="section-title__icon">🔒</span> Marco Legal: RGPD</h2>
+    <p class="section-subtitle">El Reglamento General de Protección de Datos aplicado a la Inteligencia Artificial sanitaria.</p>
+
+    <div class="card">
+      <div class="card__header">
+        <span class="card__icon">📖</span>
+        <h3 class="card__title">Artículo 9 RGPD: Datos de Salud como Categoría Especial</h3>
+      </div>
+      <div class="card__body">
+        <p>El Art. 9 del RGPD clasifica los datos de salud como <strong>datos de categoría especial</strong>, cuyo tratamiento está, por defecto, prohibido. Solo puede realizarse bajo excepciones tasadas, como el consentimiento explícito del interesado, la necesidad para fines de medicina preventiva o laboral, el interés público en el ámbito de la salud pública, o la investigación científica con garantías adecuadas.</p>
+        <p>Esto significa que cualquier proyecto de IA sanitaria que utilice datos de salud debe justificar legalmente su base de tratamiento antes de iniciar la recopilación o procesamiento de datos.</p>
+      </div>
+    </div>
+
+    <!-- Accordion 1 -->
+    <div class="accordion">
+      <button class="accordion__header" onclick="toggleAccordion(this)">
+        <span>🔍 1. Transparencia Algorítmica y AEPD</span>
+        <span class="accordion__chevron">▼</span>
+      </button>
+      <div class="accordion__body">
+        <p>La Agencia Española de Protección de Datos (AEPD) ha emitido directrices específicas sobre la transparencia de los sistemas de IA que tratan datos personales:</p>
+        <ul>
+          <li>Los interesados deben ser informados cuando una decisión es tomada o asistida por IA.</li>
+          <li>Debe proporcionarse información "significativa" sobre la lógica del algoritmo, no necesariamente el código fuente, pero sí una explicación comprensible de los factores y criterios utilizados.</li>
+          <li>Los responsables del tratamiento deben documentar las medidas de transparencia implementadas y poder demostrar su efectividad.</li>
+        </ul>
+        <p>En el contexto sanitario, esto implica que los pacientes deben saber cuándo un diagnóstico o recomendación ha sido producida o influenciada por un sistema de IA.</p>
+      </div>
+    </div>
+
+    <!-- Accordion 2 -->
+    <div class="accordion">
+      <button class="accordion__header" onclick="toggleAccordion(this)">
+        <span>📝 2. EIPD Obligatoria (Evaluación de Impacto)</span>
+        <span class="accordion__chevron">▼</span>
+      </button>
+      <div class="accordion__body">
+        <p>La Evaluación de Impacto en la Protección de Datos (EIPD) es <strong>obligatoria</strong> cuando el tratamiento de datos personales, especialmente mediante nuevas tecnologías, puede suponer un alto riesgo para los derechos y libertades de las personas.</p>
+        <ul>
+          <li>Todo proyecto de IA que trate datos de salud requiere EIPD antes de su inicio.</li>
+          <li>La EIPD debe evaluar la necesidad, proporcionalidad, riesgos y medidas de mitigación.</li>
+          <li>Debe realizarse consulta previa a la autoridad de control si el riesgo residual es alto.</li>
+          <li>La EIPD no es un documento estático: debe actualizarse cuando cambien las circunstancias del tratamiento (nuevos datos, modificación del modelo, etc.).</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Accordion 3 -->
+    <div class="accordion">
+      <button class="accordion__header" onclick="toggleAccordion(this)">
+        <span>🤖 3. Art. 22: Decisiones Automatizadas</span>
+        <span class="accordion__chevron">▼</span>
+      </button>
+      <div class="accordion__body">
+        <p>El Art. 22 del RGPD establece que todo interesado tiene derecho a <strong>no ser objeto de una decisión basada únicamente en el tratamiento automatizado</strong> que produzca efectos jurídicos o le afecte significativamente.</p>
+        <ul>
+          <li>Un sistema de IA que genere diagnósticos sin intervención humana estaría sujeto a las restricciones del Art. 22.</li>
+          <li>El paciente debe poder solicitar intervención humana, expresar su punto de vista y impugnar la decisión.</li>
+          <li>Las excepciones (consentimiento explícito, necesidad contractual, autorización legal) deben documentarse cuidadosamente.</li>
+        </ul>
+        <p>En la práctica sanitaria, esto refuerza la necesidad de supervisión humana significativa sobre cualquier sistema de IA diagnóstico o terapéutico.</p>
+      </div>
+    </div>
+
+    <!-- Accordion 4 -->
+    <div class="accordion">
+      <button class="accordion__header" onclick="toggleAccordion(this)">
+        <span>🔎 4. Ilicitud de Origen y Auditoría de Dataset</span>
+        <span class="accordion__chevron">▼</span>
+      </button>
+      <div class="accordion__body">
+        <p>Un principio fundamental del RGPD aplicado a la IA es que <strong>un modelo entrenado con datos obtenidos ilícitamente hereda esa ilicitud</strong>. La calidad legal de los datos de entrenamiento es tan importante como su calidad técnica.</p>
+        <ul>
+          <li>Antes de entrenar un modelo, debe auditarse el origen de cada dataset: ¿se obtuvo el consentimiento? ¿Se respetó la base legal? ¿Se informó adecuadamente al paciente?</li>
+          <li>El linaje de datos (data lineage) debe permitir rastrear cada dato desde su origen hasta su uso en el modelo.</li>
+          <li>Si se detecta ilicitud en el origen, el modelo puede ser declarado no conforme y su uso prohibido.</li>
+          <li>La auditoría de datasets debe ser periódica y documentada.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 20px;">
+      <div class="card__header">
+        <span class="card__icon">👤</span>
+        <h3 class="card__title">Derechos del Paciente en el Contexto de IA</h3>
+      </div>
+      <div class="card__body">
+        <ul>
+          <li><strong>Derecho de acceso:</strong> El paciente puede solicitar conocer qué datos suyos se utilizan en modelos de IA, con qué finalidad y qué decisiones se han tomado con su asistencia.</li>
+          <li><strong>Derecho de supresión (olvido):</strong> El paciente puede solicitar la eliminación de sus datos, lo que puede implicar la necesidad de reentrenar modelos de IA que los incorporaron.</li>
+          <li><strong>Accountability distribuida:</strong> En ecosistemas de IA sanitaria participan múltiples actores (responsable, encargado, proveedor de IA, hospital). La responsabilidad debe estar claramente definida y documentada mediante contratos y acuerdos de tratamiento.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="case-study">
+      <div class="case-study__title">🔍 Caso Práctico: Derecho de Supresión sobre Modelo Predictivo</div>
+      <div class="case-study__body">
+        <p>Un paciente diagnosticado de diabetes tipo 2 ejerce su derecho de supresión (Art. 17 RGPD) sobre un modelo predictivo de complicaciones diabéticas entrenado por su hospital.</p>
+        <p><strong>El hospital debe:</strong></p>
+        <ul>
+          <li>Identificar todos los datos del paciente en el dataset de entrenamiento mediante el linaje de datos del Data Lakehouse.</li>
+          <li>Eliminar esos datos del dataset activo y de cualquier copia de backup.</li>
+          <li>Evaluar si la eliminación afecta significativamente al rendimiento del modelo.</li>
+          <li>Si es necesario, reentrenar el modelo sin los datos del paciente.</li>
+          <li>Documentar todo el proceso y comunicar al paciente la acción completada.</li>
+        </ul>
+        <p><strong>Desafío técnico:</strong> Si el modelo fue entrenado con técnicas de Deep Learning, la "eliminación" de la influencia de un paciente individual puede requerir técnicas de <em>machine unlearning</em>, un campo activo de investigación.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: Reglamento de IA (RIA) -->
+  <section class="section" id="sec-ria">
+    <h2 class="section-title"><span class="section-title__icon">📜</span> Reglamento de Inteligencia Artificial (RIA)</h2>
+    <p class="section-subtitle">El marco regulatorio europeo para los sistemas de IA de alto riesgo en el ámbito sanitario.</p>
+
+    <div class="card">
+      <div class="card__header">
+        <span class="card__icon">🚨</span>
+        <h3 class="card__title">Clasificación de Alto Riesgo Sanitario</h3>
+      </div>
+      <div class="card__body">
+        <p>El Reglamento de IA (RIA) de la UE clasifica como <strong>sistemas de IA de alto riesgo</strong> aquellos utilizados en el ámbito sanitario para:</p>
+        <ul>
+          <li><strong>Diagnóstico:</strong> Sistemas que asisten o realizan diagnósticos médicos (detección de tumores, clasificación de patologías, análisis de imágenes médicas).</li>
+          <li><strong>Monitorización:</strong> Sistemas que monitorizan el estado de salud de pacientes (alertas de deterioro, predicción de eventos adversos, seguimiento remoto).</li>
+          <li><strong>Tratamiento:</strong> Sistemas que asisten en decisiones terapéuticas (dosificación de fármacos, planificación quirúrgica, selección de terapias).</li>
+        </ul>
+        <p>Estos sistemas están sujetos a obligaciones específicas tanto para sus <strong>proveedores</strong> (fabricantes) como para sus <strong>implementadores</strong> (centros sanitarios).</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card__header">
+          <span class="card__icon">🏭</span>
+          <h3 class="card__title">Obligaciones del Proveedor</h3>
+        </div>
+        <div class="card__body">
+          <ul>
+            <li><strong>RMS Continuo:</strong> Sistema de Gestión de Riesgos actualizado durante todo el ciclo de vida del producto.</li>
+            <li><strong>AI QMS con MDR/IVDR:</strong> Sistema de Gestión de Calidad específico para IA, integrado con las regulaciones de dispositivos médicos.</li>
+            <li><strong>Documentación técnica:</strong> Detallada y accesible para autoridades de vigilancia.</li>
+            <li><strong>Datasets representativos:</strong> Los datos de entrenamiento deben ser representativos, libres de sesgos y documentados.</li>
+            <li><strong>Robustez y ciberseguridad:</strong> Pruebas de resistencia ante ataques adversariales y fallos.</li>
+            <li><strong>Vigilancia post-comercialización:</strong> Monitorización continua del rendimiento en entornos reales.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card__header">
+          <span class="card__icon">🏥</span>
+          <h3 class="card__title">Obligaciones del Implementador</h3>
+        </div>
+        <div class="card__body">
+          <ul>
+            <li><strong>DPIA + FRIAS conjunta:</strong> Evaluación de impacto combinada en protección de datos y derechos fundamentales.</li>
+            <li><strong>Informar a pacientes:</strong> Transparencia sobre el uso de IA en su atención sanitaria.</li>
+            <li><strong>Supervisión humana:</strong> Garantizar que profesionales cualificados supervisan las decisiones asistidas por IA.</li>
+            <li><strong>Logging obligatorio:</strong> Registrar todas las decisiones tomadas o asistidas por el sistema de IA.</li>
+            <li><strong>Notificación de incidentes:</strong> Reportar incidentes graves o mal funcionamiento a autoridades competentes.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-title); color: var(--green-900); font-size: 1.3rem; margin: 32px 0 20px;">📅 Convergencia RGPD + RIA: Timeline de Aplicación</h3>
+
+    <div class="timeline">
+      <div class="timeline__item">
+        <h4 class="timeline__title">Fase 1: Diseño y Entrenamiento</h4>
+        <div class="timeline__body">
+          <p><strong>RGPD:</strong> Definir base legal, realizar EIPD, aplicar minimización de datos, implementar privacidad por diseño.</p>
+          <p><strong>RIA:</strong> Documentar RMS, seleccionar datasets representativos, verificar ausencia de sesgos, establecer métricas de rendimiento.</p>
+          <p><strong>Convergencia:</strong> La EIPD debe integrar los requisitos del RIA. El dataset debe cumplir simultáneamente con calidad técnica y legalidad RGPD.</p>
+        </div>
+      </div>
+      <div class="timeline__item">
+        <h4 class="timeline__title">Fase 2: Implementación y Despliegue</h4>
+        <div class="timeline__body">
+          <p><strong>RGPD:</strong> Activar derechos de los interesados, implementar logging de accesos, notificar cambios en el tratamiento.</p>
+          <p><strong>RIA:</strong> Registrar el sistema en la base de datos de la UE, implementar supervisión humana, activar logging de decisiones.</p>
+          <p><strong>Convergencia:</strong> DPIA + FRIAS conjunta. El logging debe satisfacer ambos marcos: trazabilidad RGPD y auditoría RIA.</p>
+        </div>
+      </div>
+      <div class="timeline__item">
+        <h4 class="timeline__title">Fase 3: Post-Comercialización</h4>
+        <div class="timeline__body">
+          <p><strong>RGPD:</strong> Monitorizar ejercicio de derechos, actualizar EIPD, gestionar brechas de seguridad.</p>
+          <p><strong>RIA:</strong> Vigilancia del rendimiento, auditorías periódicas, notificación de incidentes graves, actualización de documentación técnica.</p>
+          <p><strong>Convergencia:</strong> Un incidente de privacidad (brecha RGPD) puede ser simultáneamente un incidente de seguridad del sistema (RIA). Los protocolos de respuesta deben estar integrados.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-study">
+      <div class="case-study__title">🔍 Caso Práctico: MedTech despliega IA para Retinopatía Diabética</div>
+      <div class="case-study__body">
+        <p>Un proveedor MedTech desarrolla un sistema de IA para la detección automatizada de retinopatía diabética a partir de imágenes de fondo de ojo. El sistema se despliega en una red de 12 hospitales.</p>
+        <p><strong>Como proveedor debe:</strong></p>
+        <ul>
+          <li>Clasificar el sistema como alto riesgo (diagnóstico asistido).</li>
+          <li>Implementar un AI QMS integrado con MDR (Reglamento de Dispositivos Médicos).</li>
+          <li>Documentar el dataset de entrenamiento (50.000 imágenes de 15 centros, verificadas por oftalmólogos).</li>
+          <li>Demostrar representatividad étnica y demográfica del dataset.</li>
+          <li>Establecer un sistema de vigilancia post-comercialización con métricas de sensibilidad/especificidad.</li>
+        </ul>
+        <p><strong>Cada hospital implementador debe:</strong></p>
+        <ul>
+          <li>Realizar una DPIA + FRIAS conjunta antes del despliegue.</li>
+          <li>Informar a los pacientes que las imágenes serán analizadas por IA.</li>
+          <li>Garantizar que un oftalmólogo revisa cada resultado antes de comunicarlo al paciente.</li>
+          <li>Mantener un log de todas las detecciones realizadas por el sistema.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: Privacidad Avanzada -->
+  <section class="section" id="sec-priv">
+    <h2 class="section-title"><span class="section-title__icon">🛡️</span> Privacidad Avanzada</h2>
+    <p class="section-subtitle">Técnicas de protección de datos para proyectos de IA sanitaria.</p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Característica</th>
+            <th>Seudonimización</th>
+            <th>Anonimización</th>
+            <th>Datos Sintéticos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>¿Dato personal?</strong></td>
+            <td>Sí (RGPD aplica)</td>
+            <td>No (fuera de RGPD)</td>
+            <td>No (generados artificialmente)</td>
+          </tr>
+          <tr>
+            <td><strong>Reidentificación</strong></td>
+            <td>Posible con información adicional</td>
+            <td>Irreversible (si es verdadera)</td>
+            <td>Imposible (no hay individuo real)</td>
+          </tr>
+          <tr>
+            <td><strong>Utilidad para IA</strong></td>
+            <td>Alta (preserva relaciones)</td>
+            <td>Media (puede perder utilidad)</td>
+            <td>Alta (configurable)</td>
+          </tr>
+          <tr>
+            <td><strong>Colaboración inter-centros</strong></td>
+            <td>Requiere acuerdos de tratamiento</td>
+            <td>Facilitada (menor carga legal)</td>
+            <td>Máxima flexibilidad</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card__header">
+        <span class="card__icon">🧬</span>
+        <h3 class="card__title">Datos Sintéticos: El Futuro de la Privacidad</h3>
+      </div>
+      <div class="card__body">
+        <p>Los datos sintéticos son registros generados artificialmente que replican las propiedades estadísticas de los datos reales sin corresponder a ningún individuo real. Son especialmente valiosos en el ámbito sanitario porque:</p>
+        <ul>
+          <li>Permiten entrenar modelos de IA sin exponer datos de pacientes reales.</li>
+          <li>Facilitan la colaboración internacional (sin transferencias de datos personales).</li>
+          <li>Pueden amplificar datasets pequeños (crucial para enfermedades raras).</li>
+          <li>Permiten corregir sesgos presentes en datos reales mediante generación dirigida.</li>
+          <li>No están sujetos al RGPD al no constituir datos personales.</li>
+        </ul>
+        <p>Tecnologías como las <strong>GANs (Generative Adversarial Networks)</strong> y los <strong>modelos de difusión</strong> permiten generar datos sintéticos de alta fidelidad que preservan las distribuciones clínicas relevantes.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__header">
+        <span class="card__icon">⚖️</span>
+        <h3 class="card__title">Ética y Mitigación de Sesgos Algorítmicos</h3>
+      </div>
+      <div class="card__body">
+        <p>Los sesgos algorítmicos en IA sanitaria pueden tener consecuencias graves: un modelo que infradiagnostica en ciertos grupos étnicos o de edad puede amplificar las desigualdades existentes en el sistema de salud.</p>
+        <ul>
+          <li><strong>Sesgo de representación:</strong> Si el dataset de entrenamiento no refleja la diversidad de la población objetivo, el modelo rendirá peor en grupos infrarrepresentados.</li>
+          <li><strong>Sesgo de etiquetado:</strong> Los sesgos de los profesionales que etiquetaron los datos se transfieren al modelo.</li>
+          <li><strong>Sesgo de medición:</strong> Diferencias en la calidad de los datos entre centros o poblaciones.</li>
+          <li><strong>Mitigación:</strong> Auditorías de equidad periódicas, datasets equilibrados, datos sintéticos correctivos, métricas de equidad por subgrupos y comités de ética en IA.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="case-study">
+      <div class="case-study__title">🔍 Caso Práctico: Colaboración Transfronteriza Madrid-Milán-Berlín</div>
+      <div class="case-study__body">
+        <p>Tres hospitales universitarios de Madrid, Milán y Berlín colaboran en un proyecto de investigación sobre una enfermedad rara que afecta a <strong>solo 150 pacientes</strong> diagnosticados en los tres centros combinados.</p>
+        <p><strong>El problema:</strong> 150 casos son insuficientes para entrenar un modelo de IA robusto. Las transferencias internacionales de datos de salud bajo el RGPD requieren garantías adicionales y son legalmente complejas.</p>
+        <p><strong>La solución:</strong> Cada hospital genera <strong>datos sintéticos</strong> a partir de sus pacientes reales utilizando modelos de generación validados. Se generan <strong>450 pacientes sintéticos</strong> adicionales que preservan las distribuciones clínicas de cada centro.</p>
+        <ul>
+          <li>Los datos sintéticos se comparten libremente entre los tres centros (sin restricciones RGPD).</li>
+          <li>El dataset combinado (150 reales + 450 sintéticos) permite entrenar un modelo de predicción de complicaciones.</li>
+          <li>La validación del modelo se realiza localmente en cada centro con datos reales (que nunca salen del hospital).</li>
+        </ul>
+        <p><strong>Resultado:</strong> Se logra un modelo predictivo viable para una enfermedad rara, respetando plenamente el RGPD y sin necesidad de transferencias internacionales de datos personales.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: Caso España -->
+  <section class="section" id="sec-esp">
+    <h2 class="section-title"><span class="section-title__icon">🇪🇸</span> Caso de España</h2>
+    <p class="section-subtitle">La inversión estratégica de España en infraestructura de datos sanitarios.</p>
+
+    <div class="grid-4">
+      <div class="stat-card">
+        <div class="stat-card__number">€100M</div>
+        <div class="stat-card__label">Inversión Total</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__number">17</div>
+        <div class="stat-card__label">CC.AA. involucradas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__number">€35M</div>
+        <div class="stat-card__label">Tramo 2022</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__number">€65M</div>
+        <div class="stat-card__label">Tramo 2023</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__header">
+        <span class="card__icon">💶</span>
+        <h3 class="card__title">Inversión C18.I06 del Plan de Recuperación</h3>
+      </div>
+      <div class="card__body">
+        <p>Dentro del componente 18 del Plan de Recuperación, Transformación y Resiliencia de España, la inversión I06 destina <strong>€100 millones</strong> a la creación de un Data Lake Sanitario nacional. Esta inversión, financiada con fondos europeos NextGenerationEU, se estructura en dos tramos:</p>
+        <ul>
+          <li><strong>Tramo 2022 (€35M):</strong> Diagnóstico de situación, inventario de sistemas de información sanitaria, definición de estándares de interoperabilidad y gobernanza federada.</li>
+          <li><strong>Tramo 2023 (€65M):</strong> Implementación tecnológica, integración de sistemas, desarrollo de capacidades analíticas y despliegue de infraestructura en las 17 CC.AA.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card__header">
+          <span class="card__icon">🎯</span>
+          <h3 class="card__title">Objetivos Estratégicos</h3>
+        </div>
+        <div class="card__body">
+          <ul>
+            <li>Crear un espacio compartido de datos sanitarios interoperable entre todas las CC.AA.</li>
+            <li>Habilitar la investigación y la IA sanitaria a nivel nacional con datos reales anonimizados.</li>
+            <li>Mejorar la toma de decisiones en salud pública mediante analítica avanzada.</li>
+            <li>Posicionar a España como referente europeo en datos de salud y IA sanitaria.</li>
+            <li>Establecer un modelo de gobernanza federada respetuoso con las competencias autonómicas.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card__header">
+          <span class="card__icon">🖥️</span>
+          <h3 class="card__title">Componentes Técnicos</h3>
+        </div>
+        <div class="card__body">
+          <ul>
+            <li><strong>Data Lake centralizado</strong> con arquitectura Lakehouse (gobernanza + flexibilidad).</li>
+            <li><strong>Capa de interoperabilidad</strong> basada en estándares HL7 FHIR y SNOMED CT.</li>
+            <li><strong>Motor de anonimización</strong> certificado para cumplimiento RGPD.</li>
+            <li><strong>Plataforma analítica</strong> con capacidades de IA/ML para investigadores y gestores.</li>
+            <li><strong>Portal de gobernanza</strong> con control de accesos, catálogo de datos y auditoría.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__header">
+        <span class="card__icon">🏛️</span>
+        <h3 class="card__title">Prioridad: Gobernanza Federada</h3>
+      </div>
+      <div class="card__body">
+        <p>España ha adoptado un enfoque de <strong>gobernanza federada</strong> que reconoce las competencias sanitarias de las 17 CC.AA. Esto significa que:</p>
+        <ul>
+          <li>Cada CC.AA. mantiene el control sobre sus datos sanitarios locales.</li>
+          <li>El Data Lake nacional establece estándares comunes de calidad, interoperabilidad y privacidad.</li>
+          <li>Los datos se comparten mediante acuerdos de gobernanza, no mediante centralización forzosa.</li>
+          <li>La gobernanza federada es <strong>prerequisito</strong> para cualquier tratamiento de alto riesgo con IA: sin un marco de gobernanza sólido, no se autoriza el despliegue de modelos predictivos sobre datos nacionales.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="case-study">
+      <div class="case-study__title">🔍 Caso Práctico: Andalucía se Integra al Data Lake Sanitario</div>
+      <div class="case-study__body">
+        <p>El Servicio Andaluz de Salud (SAS) inicia su proceso de integración en el Data Lake Sanitario nacional, sirviendo a una población de <strong>8,5 millones de pacientes</strong>.</p>
+        <p><strong>Fases del proyecto:</strong></p>
+        <ul>
+          <li><strong>Inventario de sistemas:</strong> Catalogación de HIS (Sistema de Información Hospitalaria), RIS (Sistema de Información Radiológica) y LIS (Sistema de Información de Laboratorio) de los hospitales andaluces.</li>
+          <li><strong>Mapeo de metadatos:</strong> Homologación de terminologías locales con estándares nacionales (SNOMED CT, CIE-10).</li>
+          <li><strong>Anonimización:</strong> Implementación de pipelines de anonimización certificados para datos que se compartirán con el Data Lake nacional.</li>
+          <li><strong>RBAC (Control de Acceso Basado en Roles):</strong> Definición de perfiles de acceso según rol profesional y finalidad del tratamiento.</li>
+          <li><strong>Interoperabilidad:</strong> Desarrollo de APIs HL7 FHIR para la comunicación estandarizada con la infraestructura nacional.</li>
+        </ul>
+        <p><strong>Desafío:</strong> Integrar sistemas legacy de más de 15 años con la nueva arquitectura sin interrumpir la operación asistencial.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: Casos Prácticos Integrados -->
+  <section class="section" id="sec-casos">
+    <h2 class="section-title"><span class="section-title__icon">💡</span> Casos Prácticos Integrados</h2>
+    <p class="section-subtitle">Escenarios completos que integran tecnología, regulación y práctica clínica.</p>
+
+    <!-- Caso 1 -->
+    <div class="card">
+      <div class="card__header">
+        <span class="card__icon">🚑</span>
+        <h3 class="card__title">Caso 1: Triaje Inteligente en Urgencias</h3>
+      </div>
+      <div class="card__body">
+        <p>Un servicio de urgencias implementa un sistema de triaje inteligente que integra múltiples fuentes de datos en tiempo real para priorizar la atención de pacientes:</p>
+        <ul>
+          <li><strong>IoT y sensores:</strong> Pulseras de monitorización capturan constantes vitales (SpO2, FC, TA, temperatura) desde la sala de espera.</li>
+          <li><strong>Feature Store:</strong> Las constantes vitales se transforman en features estandarizadas (tendencias, velocidad de cambio, desviaciones respecto a valores normales por edad y sexo).</li>
+          <li><strong>EIPD previa:</strong> Se realizó una Evaluación de Impacto antes del despliegue, identificando riesgos de sesgo por edad y definiendo mitigaciones.</li>
+          <li><strong>Supervisión humana con XAI:</strong> El profesional de triaje recibe la recomendación del sistema junto con una explicación visual (gráficos SHAP) de los factores que la fundamentan. Puede aceptar, modificar o rechazar la recomendación.</li>
+          <li><strong>Logging completo:</strong> Cada recomendación del sistema, la decisión final del profesional y los datos utilizados se registran para auditoría (cumplimiento RIA y RGPD).</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Caso 2 -->
+    <div class="card">
+      <div class="card__header">
+        <span class="card__icon">📊</span>
+        <h3 class="card__title">Caso 2: Predicción de Reingresos con Modelo Federado</h3>
+      </div>
+      <div class="card__body">
+        <p>Una red de 8 hospitales colabora en un modelo predictivo de reingresos hospitalarios a 30 días utilizando aprendizaje federado:</p>
+        <ul>
+          <li><strong>Modelo federado:</strong> Los datos nunca salen de cada hospital. Solo se comparten los parámetros del modelo (pesos de red neuronal), protegiendo la privacidad de los pacientes.</li>
+          <li><strong>Linaje automatizado:</strong> El Data Lakehouse de cada hospital registra automáticamente qué datos alimentaron cada iteración de entrenamiento local.</li>
+          <li><strong>Auditoría de sesgo por edad:</strong> Se detecta que el modelo original tiene menor precisión para pacientes mayores de 80 años (subrepresentados en algunos hospitales).</li>
+          <li><strong>Datos sintéticos correctivos:</strong> Se generan datos sintéticos de pacientes octogenarios para equilibrar el dataset de los hospitales con menor representación.</li>
+          <li><strong>FRIAS (Fundamental Rights Impact Assessment):</strong> Se realiza una evaluación de impacto en derechos fundamentales según el RIA, documentando las medidas de equidad implementadas.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Caso 3 -->
+    <div class="card">
+      <div class="card__header">
+        <span class="card__icon">📄</span>
+        <h3 class="card__title">Caso 3: Documentación Sanitaria Automatizada con NLP</h3>
+      </div>
+      <div class="card__body">
+        <p>Un hospital implementa un sistema de NLP (Procesamiento de Lenguaje Natural) para automatizar la codificación CIE-10 de informes de alta:</p>
+        <ul>
+          <li><strong>NLP para codificación CIE-10:</strong> El sistema lee informes de alta en texto libre y propone automáticamente los códigos CIE-10 correspondientes a diagnósticos y procedimientos.</li>
+          <li><strong>Seudonimización:</strong> Antes del procesamiento NLP, un pipeline automatizado reemplaza identificadores directos (nombre, DNI, NASS) por tokens reversibles, permitiendo la reconstrucción del informe original cuando sea necesario.</li>
+          <li><strong>Auditoría de origen:</strong> Se documenta que el modelo NLP fue entrenado con informes de alta cuyo uso para entrenamiento de IA estaba amparado por la base legal de interés público en salud pública.</li>
+          <li><strong>Rol del técnico como supervisor/validador:</strong> El Técnico Superior en Documentación Sanitaria actúa como supervisor del sistema:
+            <ul>
+              <li>Revisa las propuestas de codificación del sistema antes de su validación final.</li>
+              <li>Detecta errores de codificación y alimenta el sistema con correcciones.</li>
+              <li>Verifica que la seudonimización se aplicó correctamente.</li>
+              <li>Documenta las tasas de acierto y error del sistema para su auditoría periódica.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 9: Autoevaluación -->
+  <section class="section" id="sec-quiz">
+    <h2 class="section-title"><span class="section-title__icon">✅</span> Autoevaluación</h2>
+    <p class="section-subtitle">Comprueba tus conocimientos sobre los contenidos estudiados.</p>
+
+    <!-- Question 1 -->
+    <div class="quiz-question" id="q1">
+      <div class="quiz-question__text">1. ¿Qué arquitectura de datos combina la flexibilidad del Data Lake con la gobernanza del Data Warehouse?</div>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q1', false)">a) Data Warehouse federado</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q1', true)">b) Data Lakehouse</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q1', false)">c) Data Lake distribuido</button>
+      <div class="quiz-feedback" id="q1-feedback"></div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="quiz-question" id="q2">
+      <div class="quiz-question__text">2. ¿Qué artículo del RGPD protege específicamente los datos de salud como categoría especial?</div>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q2', false)">a) Artículo 5</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q2', false)">b) Artículo 22</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q2', true)">c) Artículo 9</button>
+      <div class="quiz-feedback" id="q2-feedback"></div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="quiz-question" id="q3">
+      <div class="quiz-question__text">3. ¿Cuál es la función principal del Feature Store en un ecosistema MLOps sanitario?</div>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q3', false)">a) Almacenar modelos de IA entrenados</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q3', true)">b) Gestionar features de ML consistentes y reutilizables</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q3', false)">c) Ejecutar inferencias en tiempo real</button>
+      <div class="quiz-feedback" id="q3-feedback"></div>
+    </div>
+
+    <!-- Question 4 -->
+    <div class="quiz-question" id="q4">
+      <div class="quiz-question__text">4. Según el Reglamento de IA (RIA), ¿quién es el "implementador" de un sistema de IA sanitario?</div>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q4', false)">a) La empresa que desarrolla el software</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q4', true)">b) El hospital o profesional médico que utiliza el sistema</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q4', false)">c) La Agencia Europea de Medicamentos</button>
+      <div class="quiz-feedback" id="q4-feedback"></div>
+    </div>
+
+    <!-- Question 5 -->
+    <div class="quiz-question" id="q5">
+      <div class="quiz-question__text">5. ¿Qué técnica de privacidad genera registros ficticios que replican las propiedades estadísticas de los datos reales?</div>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q5', false)">a) Seudonimización</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q5', false)">b) Anonimización k-anonimato</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q5', true)">c) Datos sintéticos</button>
+      <div class="quiz-feedback" id="q5-feedback"></div>
+    </div>
+
+    <!-- Question 6 -->
+    <div class="quiz-question" id="q6">
+      <div class="quiz-question__text">6. ¿Cuánto ha invertido España en el proyecto de Data Lake Sanitario Nacional dentro del Plan de Recuperación?</div>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q6', false)">a) €50 millones</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q6', true)">b) €100 millones</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q6', false)">c) €200 millones</button>
+      <div class="quiz-feedback" id="q6-feedback"></div>
+    </div>
+
+    <!-- Question 7 -->
+    <div class="quiz-question" id="q7">
+      <div class="quiz-question__text">7. Según el RIA, la supervisión humana sobre los sistemas de IA de alto riesgo debe ser...</div>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q7', false)">a) Meramente informativa, sin capacidad de intervención</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q7', false)">b) Opcional, si el sistema ha sido certificado</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q7', true)">c) Significativa, con capacidad de modificar la decisión</button>
+      <div class="quiz-feedback" id="q7-feedback"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>Realizado por V. López (<a href="https://sanidadedtech.es/" target="_blank" rel="noopener noreferrer">@sanidadedtech</a>)</p>
+</footer>
+
+<!-- Scroll to Top -->
+<button class="scroll-top" id="scrollTopBtn" onclick="scrollToTop()" aria-label="Volver arriba">↑</button>
+
+<script>
+// ===== SECTION NAVIGATION =====
+const sections = document.querySelectorAll('.section');
+const navBtns = document.querySelectorAll('.nav__btn');
+const progressFill = document.getElementById('progressFill');
+const sectionIds = ['sec-intro','sec-arq','sec-mlops','sec-rgpd','sec-ria','sec-priv','sec-esp','sec-casos','sec-quiz'];
+
+function showSection(id, btn) {
+  // Hide all sections
+  sections.forEach(s => {
+    s.classList.remove('active');
+    s.style.animation = 'none';
+  });
+  // Remove active from all buttons
+  navBtns.forEach(b => b.classList.remove('active'));
+
+  // Show target section with animation
+  const target = document.getElementById(id);
+  if (target) {
+    // Force reflow for animation restart
+    void target.offsetWidth;
+    target.style.animation = '';
+    target.classList.add('active');
+  }
+  // Activate button
+  if (btn) btn.classList.add('active');
+
+  // Update progress bar
+  const idx = sectionIds.indexOf(id);
+  if (idx !== -1) {
+    const pct = ((idx + 1) / sectionIds.length) * 100;
+    progressFill.style.width = pct + '%';
+  }
+
+  // Scroll to top of main content
+  window.scrollTo({ top: document.querySelector('.nav').offsetTop - 4, behavior: 'smooth' });
+
+  // Scroll nav button into view on mobile
+  if (btn) {
+    btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }
+}
+
+// ===== ACCORDIONS =====
+function toggleAccordion(header) {
+  const body = header.nextElementSibling;
+  const isOpen = header.classList.contains('open');
+
+  // Close all accordions in the same section
+  const parentSection = header.closest('.section');
+  parentSection.querySelectorAll('.accordion__header.open').forEach(h => {
+    h.classList.remove('open');
+    h.nextElementSibling.classList.remove('open');
+  });
+
+  // Toggle current if it was closed
+  if (!isOpen) {
+    header.classList.add('open');
+    body.classList.add('open');
+  }
+}
+
+// ===== QUIZ =====
+const feedbackMessages = {
+  q1: { correct: '✅ ¡Correcto! El Data Lakehouse combina flexibilidad y gobernanza, siendo la arquitectura ideal para IA sanitaria.', incorrect: '❌ Incorrecto. La respuesta correcta es Data Lakehouse. Repasa la sección de Arquitectura.' },
+  q2: { correct: '✅ ¡Correcto! El Artículo 9 del RGPD clasifica los datos de salud como categoría especial con protección reforzada.', incorrect: '❌ Incorrecto. La respuesta correcta es el Artículo 9. Repasa la sección de RGPD.' },
+  q3: { correct: '✅ ¡Correcto! El Feature Store centraliza la gestión de features de ML, garantizando consistencia y reutilización.', incorrect: '❌ Incorrecto. La respuesta correcta es gestionar features de ML consistentes y reutilizables. Repasa la sección de MLOps.' },
+  q4: { correct: '✅ ¡Correcto! El implementador según el RIA es la entidad que usa el sistema de IA: el hospital o el profesional médico.', incorrect: '❌ Incorrecto. La respuesta correcta es el hospital o profesional médico. Repasa la sección de RIA.' },
+  q5: { correct: '✅ ¡Correcto! Los datos sintéticos generan registros ficticios que replican propiedades estadísticas sin corresponder a personas reales.', incorrect: '❌ Incorrecto. La respuesta correcta es datos sintéticos. Repasa la sección de Privacidad Avanzada.' },
+  q6: { correct: '✅ ¡Correcto! España ha invertido €100 millones en el Data Lake Sanitario Nacional (€35M en 2022 + €65M en 2023).', incorrect: '❌ Incorrecto. La respuesta correcta es €100 millones. Repasa la sección Caso España.' },
+  q7: { correct: '✅ ¡Correcto! El RIA exige supervisión humana significativa, con capacidad real de modificar o revocar decisiones del sistema.', incorrect: '❌ Incorrecto. La respuesta correcta es significativa, con capacidad de modificar la decisión. Repasa la sección de RIA.' }
+};
+
+function checkAnswer(btn, questionId, isCorrect) {
+  const question = document.getElementById(questionId);
+  const options = question.querySelectorAll('.quiz-option');
+  const feedback = document.getElementById(questionId + '-feedback');
+
+  // If already answered, do nothing
+  if (btn.classList.contains('disabled')) return;
+
+  // Disable all options
+  options.forEach(opt => {
+    opt.classList.add('disabled');
+    // Mark the correct answer
+    if (opt.getAttribute('onclick').includes('true')) {
+      opt.classList.add('correct');
+      opt.innerHTML = '✅ ' + opt.textContent;
+    }
+  });
+
+  // Mark incorrect if wrong
+  if (!isCorrect) {
+    btn.classList.remove('correct');
+    btn.classList.add('incorrect');
+    btn.innerHTML = '❌ ' + btn.textContent.replace('✅ ', '');
+    feedback.className = 'quiz-feedback show incorrect';
+    feedback.textContent = feedbackMessages[questionId].incorrect;
+  } else {
+    feedback.className = 'quiz-feedback show correct';
+    feedback.textContent = feedbackMessages[questionId].correct;
+  }
+}
+
+// ===== SCROLL TO TOP =====
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 400) {
+    scrollTopBtn.classList.add('visible');
+  } else {
+    scrollTopBtn.classList.remove('visible');
+  }
+});
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== INITIAL STATE =====
+progressFill.style.width = (1 / sectionIds.length * 100) + '%';
+</script>
+</body>
+</html>
